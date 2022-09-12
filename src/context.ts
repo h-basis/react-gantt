@@ -11,6 +11,7 @@ export interface GanttContext<RecordType = DefaultRecordType> {
   }
   showBackToday: boolean
   showUnitSwitch: boolean
+  showTaskBarTotalDays: boolean
   onRow?: {
     onClick: (record: Gantt.Record<RecordType>) => void
   }

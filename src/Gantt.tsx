@@ -46,6 +46,7 @@ export interface GanttProps<RecordType = DefaultRecordType> {
   getBarColor?: GanttContext<RecordType>['getBarColor']
   showBackToday?: GanttContext<RecordType>['showBackToday']
   showUnitSwitch?: GanttContext<RecordType>['showUnitSwitch']
+  showTaskBarTotalDays?: GanttContext<RecordType>['showTaskBarTotalDays']
   onRow?: GanttContext<RecordType>['onRow']
   tableIndent?: GanttContext<RecordType>['tableIndent']
   expandIcon?: GanttContext<RecordType>['expandIcon']
@@ -82,6 +83,7 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
     getBarColor,
     showBackToday = true,
     showUnitSwitch = true,
+    showTaskBarTotalDays = true,
     unit,
     onRow,
     tableIndent = TABLE_INDENT,
@@ -134,6 +136,7 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
       getBarColor,
       showBackToday,
       showUnitSwitch,
+      showTaskBarTotalDays,
       onRow,
       tableIndent,
       expandIcon,
@@ -155,6 +158,7 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
       getBarColor,
       showBackToday,
       showUnitSwitch,
+      showTaskBarTotalDays,
       onRow,
       tableIndent,
       expandIcon,

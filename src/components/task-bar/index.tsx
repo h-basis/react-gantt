@@ -1,14 +1,14 @@
-import React, { useCallback, useContext, useMemo } from 'react'
-import { observer } from 'mobx-react-lite'
+import { usePersistFn } from 'ahooks'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
-import { usePersistFn } from 'ahooks'
+import { observer } from 'mobx-react-lite'
+import React, { useCallback, useContext, useMemo } from 'react'
+import { TOP_PADDING } from '../../constants'
 import Context from '../../context'
+import { ONE_DAY_MS } from '../../store'
 import { Gantt } from '../../types'
 import DragResize from '../drag-resize'
 import './index.less'
-import { TOP_PADDING } from '../../constants'
-import { ONE_DAY_MS } from '../../store'
 
 interface TaskBarProps {
   data: Gantt.Bar
@@ -25,6 +25,7 @@ const TaskBar: React.FC<TaskBarProps> = ({ data }) => {
     alwaysShowTaskBar,
     renderLeftText,
     renderRightText,
+    showTaskBarTotalDays,
   } = useContext(Context)
   const {
     width,
@@ -250,7 +251,7 @@ const TaskBar: React.FC<TaskBarProps> = ({ data }) => {
           )}
         </DragResize>
       </div>
-      {(allowDrag || disabled || alwaysShowTaskBar) && (
+      {(allowDrag || disabled || showTaskBarTotalDays) && (
         <div className={`${prefixClsTaskBar}-label`} style={{ left: width / 2 - 10 }}>
           {getDateWidth(translateX + width + moveCalc, translateX)}天
         </div>
