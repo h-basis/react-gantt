@@ -6943,7 +6943,7 @@ var TimeAxisScaleSelect = function TimeAxisScaleSelect() {
 
 var TimeAxisScaleSelect$1 = observer(TimeAxisScaleSelect);
 
-var css_248z$1 = ".gantt-time-indicator {\n  position: absolute;\n  top: 0;\n  left: 0;\n  background-color: #096dd9;\n  box-shadow: 0 2px 4px rgba(1, 113, 194, 0.1);\n  transform: translate(12px, 14px);\n  transition: opacity 0.3s;\n  padding: 0 7px;\n  color: #fff;\n  border-radius: 4px;\n  outline: 0;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  box-sizing: border-box;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n          user-select: none;\n  vertical-align: middle;\n  cursor: pointer;\n  border: none;\n  font-size: 12px;\n}\n.gantt-time-indicator-scrolling {\n  opacity: 0;\n}\n";
+var css_248z$1 = ".gantt-time-indicator {\n  position: absolute;\n  top: 0;\n  left: 0;\n  background-color: #a7cf69;\n  box-shadow: 0 2px 4px rgba(1, 113, 194, 0.1);\n  transform: translate(12px, 14px);\n  transition: opacity 0.3s;\n  padding: 0 7px;\n  color: #fff;\n  border-radius: 4px;\n  outline: 0;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  box-sizing: border-box;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n          user-select: none;\n  vertical-align: middle;\n  cursor: pointer;\n  border: none;\n  font-size: 12px;\n}\n.gantt-time-indicator-scrolling {\n  opacity: 0;\n}\n";
 styleInject(css_248z$1);
 
 var TimeIndicator = function TimeIndicator() {
