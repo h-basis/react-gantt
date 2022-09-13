@@ -6177,7 +6177,7 @@ var DragPresent = function DragPresent() {
 
 var DragPresent$1 = observer(DragPresent);
 
-var css_248z$c = ".gantt-today {\n  position: absolute;\n  top: 0;\n  background: #096dd9;\n  width: 1px;\n  height: 1px;\n  text-align: center;\n  line-height: 1px;\n  border-radius: 50%;\n  font-size: 12px;\n  color: #ffffff;\n  pointer-events: none;\n}\n.gantt-today_line {\n  width: 1px;\n  background: #096dd9;\n  margin-left: 15px;\n}\n";
+var css_248z$c = ".gantt-today {\n  position: absolute;\n  top: 0;\n  background: #a7cf69;\n  width: 1px;\n  height: 1px;\n  text-align: center;\n  line-height: 1px;\n  border-radius: 50%;\n  font-size: 12px;\n  color: #ffffff;\n  pointer-events: none;\n}\n.gantt-today_line {\n  width: 1px;\n  background: #a7cf69;\n  margin-left: 15px;\n}\n";
 styleInject(css_248z$c);
 
 var Today = function Today() {
