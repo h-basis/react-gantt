@@ -27,7 +27,7 @@ export declare namespace Gantt {
     }
     type Sight = 'day' | 'week' | 'month' | 'quarter' | 'halfYear';
     type MoveType = 'left' | 'right' | 'move' | 'create';
-    type SightConfigValue = 2880 | 3600 | 14400 | 86400 | 115200;
+    type SightConfigValue = 2880 | 3600 | 14400 | 28800 | 86400 | 115200;
     interface SightConfig {
         type: Sight;
         label: string;
