@@ -1,5 +1,5 @@
-import { Dayjs } from 'dayjs'
-import React from 'react'
+import type { Dayjs } from 'dayjs'
+import type React from 'react'
 
 export type DefaultRecordType = Record<string, any>
 export namespace Gantt {
@@ -29,7 +29,7 @@ export namespace Gantt {
   export type Sight = 'day' | 'week' | 'month' | 'quarter' | 'halfYear'
   export type MoveType = 'left' | 'right' | 'move' | 'create'
 
-  export type SightConfigValue = 2880 | 3600 | 14400 | 86400 | 115200
+  export type SightConfigValue = 2880 | 3600 | 14400 | 28800 | 86400 | 115200
 
   export interface SightConfig {
     type: Sight
