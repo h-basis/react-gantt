@@ -1,4 +1,5 @@
-import dayjs, { Dayjs } from 'dayjs'
+import type { Dayjs } from 'dayjs'
+import dayjs from 'dayjs'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 import isBetween from 'dayjs/plugin/isBetween'
 import isLeapYear from 'dayjs/plugin/isLeapYear'
@@ -9,10 +10,11 @@ import debounce from 'lodash/debounce'
 import find from 'lodash/find'
 import throttle from 'lodash/throttle'
 import { action, computed, observable, runInAction, toJS } from 'mobx'
-import React, { createRef } from 'react'
+import type React from 'react'
+import { createRef } from 'react'
 import { HEADER_HEIGHT, TOP_PADDING } from './constants'
-import { GanttProps as GanttProperties } from './Gantt'
-import { Gantt } from './types'
+import type { GanttProps as GanttProperties } from './Gantt'
+import type { Gantt } from './types'
 import { flattenDeep, transverseData } from './utils'
 
 dayjs.extend(weekday)
@@ -55,7 +57,15 @@ function isRestDay(date: string) {
   return calc.includes(dayjs(date).weekday())
 }
 class GanttStore {
-  constructor({ rowHeight, disabled = false, customSights }: { rowHeight: number; disabled: boolean; customSights: Gantt.SightConfig[] }) {
+  constructor({
+    rowHeight,
+    disabled = false,
+    customSights,
+  }: {
+    rowHeight: number
+    disabled: boolean
+    customSights: Gantt.SightConfig[]
+  }) {
     this.width = 1320
     this.height = 418
     this.viewTypeList = customSights.length ? customSights : viewTypeList
@@ -180,6 +190,7 @@ class GanttStore {
   setColumns(columns: Gantt.Column[]) {
     this.columns = columns
   }
+
   @action
   setDependencies(dependencies: Gantt.Dependence[]) {
     this.dependencies = dependencies
@@ -190,10 +201,12 @@ class GanttStore {
     this.scrolling = true
     this.setTranslateX(translateX)
   }
+
   @action
   handlePanEnd() {
     this.scrolling = false
   }
+
   @action syncSize(size: { width?: number; height?: number }) {
     if (!size.height || !size.width) return
 
@@ -232,10 +245,12 @@ class GanttStore {
       this.tableWidth = this.width - this.viewWidth
     }
   }
+
   @action
   setTranslateX(translateX: number) {
     this.translateX = Math.max(translateX, 0)
   }
+
   @action switchSight(type: Gantt.Sight) {
     const target = find(this.viewTypeList, { type })
     if (target) {
@@ -516,9 +531,9 @@ class GanttStore {
     const dayRect = () => {
       const stAmp = date.startOf('day')
       const endAmp = date.endOf('day')
-      // @ts-ignore
+      // @ts-expect-error
       const left = stAmp / this.pxUnitAmp
-      // @ts-ignore
+      // @ts-expect-error
       const width = (endAmp - stAmp) / this.pxUnitAmp
 
       return {
@@ -607,7 +622,7 @@ class GanttStore {
   @computed get getBarList(): Gantt.Bar[] {
     const { pxUnitAmp, data } = this
     // 最小宽度
-    const minStamp = 11 * pxUnitAmp
+    // const minStamp = 11 * pxUnitAmp
     // TODO 去除高度读取
     const height = 8
     const baseTop = TOP_PADDING + this.rowHeight / 2 - height / 2
@@ -624,23 +639,25 @@ class GanttStore {
     const flattenData = flattenDeep(data)
     const barList = flattenData.map((item, index) => {
       const valid = item.startDate && item.endDate
-      let startAmp = dayjs(item.startDate || 0)
+      const startAmp = dayjs(item.startDate || 0)
         .startOf('day')
         .valueOf()
-      let endAmp = dayjs(item.endDate || 0)
+      const endAmp = dayjs(item.endDate || 0)
         .endOf('day')
         .valueOf()
 
+      // MEMO: minStamp 以内に入った場合、endDate が壊れる為一旦無効化
+      // https://trello.com/c/N8BLFqWX
       // 开始结束日期相同默认一天
-      if (Math.abs(endAmp - startAmp) < minStamp) {
-        startAmp = dayjs(item.startDate || 0)
-          .startOf('day')
-          .valueOf()
-        endAmp = dayjs(item.endDate || 0)
-          .endOf('day')
-          .add(minStamp, 'millisecond')
-          .valueOf()
-      }
+      // if (Math.abs(endAmp - startAmp) < minStamp) {
+      //   startAmp = dayjs(item.startDate || 0)
+      //     .startOf('day')
+      //     .valueOf()
+      //   endAmp = dayjs(item.endDate || 0)
+      //     .endOf('day')
+      //     .add(minStamp, 'millisecond')
+      //     .valueOf()
+      // }
 
       const width = valid ? (endAmp - startAmp) / pxUnitAmp : 0
       const translateX = valid ? startAmp / pxUnitAmp : 0
@@ -675,21 +692,21 @@ class GanttStore {
   }
 
   @action
-  handleWheel = (event: WheelEvent) => {
-    if (event.deltaX !== 0) {
-      event.preventDefault()
-      event.stopPropagation()
+    handleWheel = (event: WheelEvent) => {
+      if (event.deltaX !== 0) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+      if (this._wheelTimer) clearTimeout(this._wheelTimer)
+      // 水平滚动
+      if (Math.abs(event.deltaX) > 0) {
+        this.scrolling = true
+        this.setTranslateX(this.translateX + event.deltaX)
+      }
+      this._wheelTimer = window.setTimeout(() => {
+        this.scrolling = false
+      }, 100)
     }
-    if (this._wheelTimer) clearTimeout(this._wheelTimer)
-    // 水平滚动
-    if (Math.abs(event.deltaX) > 0) {
-      this.scrolling = true
-      this.setTranslateX(this.translateX + event.deltaX)
-    }
-    this._wheelTimer = window.setTimeout(() => {
-      this.scrolling = false
-    }, 100)
-  }
 
   handleScroll = (event: React.UIEvent<HTMLDivElement, UIEvent>) => {
     const { scrollTop } = event.currentTarget
@@ -792,9 +809,11 @@ class GanttStore {
     barInfo.translateX = Math.max(x, 0)
     barInfo.stepGesture = 'moving'
   }
+
   getMovedDay(ms: number): number {
     return Math.round(ms / ONE_DAY_MS)
   }
+
   /** 更新时间 */
   @action
   async updateTaskDate(
