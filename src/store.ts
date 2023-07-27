@@ -659,9 +659,7 @@ class GanttStore {
       //     .valueOf()
       // }
 
-      // const width = valid ? (endAmp - startAmp) / pxUnitAmp : 0
-      const width = valid ? Math.max((endAmp - startAmp) / pxUnitAmp, 4) : 0
-
+      const width = valid ? (endAmp - startAmp) / pxUnitAmp : 0
       const translateX = valid ? startAmp / pxUnitAmp : 0
       const translateY = baseTop + index * topStep
       const { _parent } = item
