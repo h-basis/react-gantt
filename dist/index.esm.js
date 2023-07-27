@@ -5413,8 +5413,6 @@ var GanttStore = /*#__PURE__*/function () {
           _childrenCount: !item.children ? 0 : item.children.length // 子任务
 
         };
-        console.log(item.startDate, item.endDate);
-        console.log(item.content, width, endAmp - startAmp);
         item._bar = bar;
         return bar;
       }); // 进行展开扁平
