@@ -5383,7 +5383,7 @@ var GanttStore = /*#__PURE__*/function () {
         // }
         // const width = valid ? (endAmp - startAmp) / pxUnitAmp : 0
 
-        var width = valid ? Math.max((endAmp - startAmp) / pxUnitAmp, 5) : 0;
+        var width = valid ? Math.max((endAmp - startAmp) / pxUnitAmp, 4) : 0;
         var translateX = valid ? startAmp / pxUnitAmp : 0;
         var translateY = baseTop + index * topStep;
         var _parent = item._parent;
