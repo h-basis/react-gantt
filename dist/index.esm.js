@@ -4804,9 +4804,9 @@ var GanttStore = /*#__PURE__*/function () {
 
       var dayRect = function dayRect() {
         var stAmp = date.startOf('day');
-        var endAmp = date.endOf('day'); // @ts-ignore
+        var endAmp = date.endOf('day'); // @ts-expect-error
 
-        var left = stAmp / _this.pxUnitAmp; // @ts-ignore
+        var left = stAmp / _this.pxUnitAmp; // @ts-expect-error
 
         var width = (endAmp - stAmp) / _this.pxUnitAmp;
         return {
@@ -5348,8 +5348,8 @@ var GanttStore = /*#__PURE__*/function () {
 
       var pxUnitAmp = this.pxUnitAmp,
           data = this.data; // 最小宽度
-
-      var minStamp = 11 * pxUnitAmp; // TODO 去除高度读取
+      // const minStamp = 11 * pxUnitAmp
+      // TODO 去除高度读取
 
       var height = 8;
       var baseTop = TOP_PADDING + this.rowHeight / 2 - height / 2;
@@ -5369,12 +5369,18 @@ var GanttStore = /*#__PURE__*/function () {
       var barList = flattenData.map(function (item, index) {
         var valid = item.startDate && item.endDate;
         var startAmp = dayjs(item.startDate || 0).startOf('day').valueOf();
-        var endAmp = dayjs(item.endDate || 0).endOf('day').valueOf(); // 开始结束日期相同默认一天
-
-        if (Math.abs(endAmp - startAmp) < minStamp) {
-          startAmp = dayjs(item.startDate || 0).startOf('day').valueOf();
-          endAmp = dayjs(item.endDate || 0).endOf('day').add(minStamp, 'millisecond').valueOf();
-        }
+        var endAmp = dayjs(item.endDate || 0).endOf('day').valueOf(); // MEMO: minStamp 以内に入った場合、endDate が壊れる為一旦無効化
+        // https://trello.com/c/N8BLFqWX
+        // 开始结束日期相同默认一天
+        // if (Math.abs(endAmp - startAmp) < minStamp) {
+        //   startAmp = dayjs(item.startDate || 0)
+        //     .startOf('day')
+        //     .valueOf()
+        //   endAmp = dayjs(item.endDate || 0)
+        //     .endOf('day')
+        //     .add(minStamp, 'millisecond')
+        //     .valueOf()
+        // }
 
         var width = valid ? (endAmp - startAmp) / pxUnitAmp : 0;
         var translateX = valid ? startAmp / pxUnitAmp : 0;
