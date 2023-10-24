@@ -7067,6 +7067,7 @@ var GanttComponent = function GanttComponent(props) {
   }, [data, endDateKey, startDateKey, store]);
   useEffect(function () {
     store.setColumns(columns);
+    store.initWidth();
   }, [columns, store]);
   useEffect(function () {
     store.setOnUpdate(onUpdate);
