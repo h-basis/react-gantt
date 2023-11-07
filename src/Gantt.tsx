@@ -110,6 +110,7 @@ const GanttComponent = <RecordType extends DefaultRecordType>(props: GanttProps<
   }, [data, endDateKey, startDateKey, store])
   useEffect(() => {
     store.setColumns(columns)
+    store.initWidth()
   }, [columns, store])
   useEffect(() => {
     store.setOnUpdate(onUpdate)
